@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using XPathValidatorWeb.Classes;
+using XPathValidatorWeb.Extensions;
 
 namespace XPathValidatorWeb.Pages
 {
+    [BindProperties()]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
@@ -21,21 +23,24 @@ namespace XPathValidatorWeb.Pages
             _logger = logger;
         }
 
-        [BindProperty]
         public ValidationItem Main { get; set; }
 
-       
 
-      
+        public void OnGet()
+        {
+        }
 
-        public ActionResult OnPost()
+
+        public void OnPost()
         {
             if (ModelState.IsValid)
             {
 
             }
 
-            return Page();
+            //OnGet();
+
+            //return OnGet();
         }
     }
 }

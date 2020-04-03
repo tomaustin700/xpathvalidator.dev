@@ -31,13 +31,8 @@ namespace XPathValidatorWeb.Classes
                 results.Add(new ValidationResult(ex.Message));
             }
 
+            results.Add(new ValidationResult("Validated Successfully"));
 
-            //if (XPathExpression.)
-            //{
-            //    yield return new ValidationResult(
-            //        $"Classic movies must have a release year no later than {_classicYear}.",
-            //        new[] { nameof(ReleaseDate) });
-            //}
 
             return results;
         }
