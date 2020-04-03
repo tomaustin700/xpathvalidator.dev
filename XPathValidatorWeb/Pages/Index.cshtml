@@ -1,0 +1,59 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<style>
+    div.maininputs {
+        width: 1000px;
+        margin: auto;
+        /*border: 3px solid #73AD21;*/
+    }
+
+    .input {
+        width: 1000px
+    }
+
+    .xml {
+        height: 400px
+    }
+
+    .left-align {
+        text-align: left;
+        float: left;
+    }
+
+    .input-div {
+        padding-bottom: 7px;
+    }
+
+    .validation-summary-errors ul {
+        list-style: none;
+        padding-left: 0px;
+    }
+
+</style>
+
+<div class="text-center maininputs">
+    <form method="post">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <fieldset>
+            <div class="input-div">
+                <div>
+                    <label class="left-align" for="xpathExpression">XPath Expression</label>
+                </div>
+                <input class="input xpath" type="text" name="Main.XPathExpression">
+            </div>
+            <div class="input-div">
+                <div>
+                    <label class="left-align" for="xml">XML</label>
+                </div>
+                <textarea class="input xml" type="text" name="Main.XML"></textarea>
+            </div>
+            <div class="left-align">
+                <input type="submit" value="Validate">
+            </div>
+        </fieldset>
+    </form>
+</div>
