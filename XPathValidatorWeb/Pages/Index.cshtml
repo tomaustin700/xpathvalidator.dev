@@ -32,28 +32,53 @@
         list-style: none;
         padding-left: 0px;
     }
-
 </style>
 
 <div class="text-center maininputs">
-    <form method="post">
-        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-        <fieldset>
-            <div class="input-div">
-                <div>
-                    <label class="left-align" for="xpathExpression">XPath Expression</label>
-                </div>
-                <input class="input xpath" type="text" name="Main.XPathExpression">
+
+    @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })*@
+    <div class="text-danger" id="errorInfo"></div>
+    <fieldset>
+        <div class="input-div">
+            <div>
+                <label class="left-align" for="xpathExpression">XPath Expression</label>
             </div>
-            <div class="input-div">
-                <div>
-                    <label class="left-align" for="xml">XML</label>
-                </div>
-                <textarea class="input xml" type="text" name="Main.Xml"></textarea>
+            <input class="input xpath" type="text" id="xpathInput">
+        </div>
+        <div class="input-div">
+            <div>
+                <label class="left-align" for="xml">XML</label>
             </div>
-            <div class="left-align">
-                <input type="submit" value="Validate">
-            </div>
-        </fieldset>
-    </form>
+            <textarea class="input xml" type="text" id="xmlInput"></textarea>
+        </div>
+        <div class="left-align">
+            <input type="submit" value="Validate" id="validateButton">
+        </div>
+    </fieldset>
+
 </div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#validateButton').click(function () {
+            var url = "/api/Validation/Validate";
+            console.log(url);
+            $.ajax({
+                type: "POST",
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ "xpathExpression": document.getElementById("xpathInput").value, "xml": document.getElementById("xmlInput").value }),
+                success: function (data) {
+
+                },
+                error: function (data) {
+                    console.log(data);
+                    document.getElementById("errorInfo").textContent = data.responseText;
+                }
+            });
+        });
+
+    });
+</script>

@@ -7,34 +7,14 @@ using System.Threading.Tasks;
 
 namespace XPathValidatorWeb.Classes
 {
-    public class ValidationItem : IValidatableObject
+    public class ValidationItem
     {
 
-        [BindProperty]
-        [Required]
-        [Display(Name = "XPath Expression")]
         public string XPathExpression { get; set; }
 
-        [BindProperty]
-        [Display(Name = "XML")]
+
         public string XML { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var results = new List<ValidationResult>();
-            try
-            {
-                System.Xml.XPath.XPathExpression.Compile(XPathExpression);
-            }
-            catch (Exception ex)
-            {
-                results.Add(new ValidationResult(ex.Message));
-            }
 
-            results.Add(new ValidationResult("Validated Successfully"));
-
-
-            return results;
-        }
     }
 }

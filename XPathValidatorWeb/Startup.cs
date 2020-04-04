@@ -54,12 +54,14 @@ namespace XPathValidatorWeb
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
+            
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
