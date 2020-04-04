@@ -1,7 +1,6 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
 }
 
 <style>
@@ -28,6 +27,10 @@
         padding-bottom: 7px;
     }
 
+    .button-div {
+        padding-bottom: 18px;
+    }
+
     .validation-summary-errors ul {
         list-style: none;
         padding-left: 0px;
@@ -41,26 +44,38 @@
     <fieldset>
         <div class="input-div">
             <div>
-                <label class="left-align" for="xpathExpression">XPath Expression</label>
+                <h5 class="left-align" for="xpathExpression">XPath Expression</h5>
             </div>
             <input class="input xpath" type="text" id="xpathInput">
         </div>
         <div class="input-div">
             <div>
-                <label class="left-align" for="xml">XML</label>
+                <h5 class="left-align" for="xml">XML</h5>
             </div>
             <textarea class="input xml" type="text" id="xmlInput"></textarea>
         </div>
-        <div class="left-align">
-            <input type="submit" value="Validate" id="validateButton">
+        <div class="left-align button-div">
+            <button type="button" class="btn btn-light" id="validateButton">Validate</button>
+            <button type="button" class="btn btn-light" id="clearButton">Clear</button>
         </div>
     </fieldset>
 
+    <div class="left-align">
+        <h5>About</h5>
+        <p>XPath Validator is a validator and tester for XPath expressions. Use it to either compile your XPath expressions and check their validity or test them by providing XML and checking the response.</p>
+    </div>
+
 </div>
+
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $('#clearButton').click(function () {
+            document.getElementById("xpathInput").value = "";
+            document.getElementById("xmlInput").value = "";
+        });
 
         $('#validateButton').click(function () {
             document.getElementById("errorInfo").textContent = "";
