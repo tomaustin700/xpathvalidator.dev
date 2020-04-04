@@ -36,8 +36,8 @@
 
 <div class="text-center maininputs">
 
-    @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })*@
     <div class="text-danger" id="errorInfo"></div>
+    <div class="text-info" id="responseInfo"></div>
     <fieldset>
         <div class="input-div">
             <div>
@@ -63,6 +63,9 @@
     $(document).ready(function () {
 
         $('#validateButton').click(function () {
+            document.getElementById("errorInfo").textContent = "";
+            document.getElementById("responseInfo").textContent = "";
+
             var url = "/api/Validation/Validate";
             console.log(url);
             $.ajax({
@@ -71,6 +74,9 @@
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ "xpathExpression": document.getElementById("xpathInput").value, "xml": document.getElementById("xmlInput").value }),
                 success: function (data) {
+                    console.log(data);
+
+                    document.getElementById("responseInfo").textContent = data;
 
                 },
                 error: function (data) {
