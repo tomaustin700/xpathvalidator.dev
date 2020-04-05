@@ -15,12 +15,11 @@
     }
 
     .xml {
-        height: 400px
+        height: 1000px
     }
 
     .left-align {
         text-align: left;
-        float: left;
     }
 
     .input-div {
@@ -35,12 +34,15 @@
         list-style: none;
         padding-left: 0px;
     }
+
+    .CodeMirror {
+        text-align: left !important;
+        border: 1px solid #bbbbbb;
+        height: 500px !important;
+    }
 </style>
 
 <div class="text-center maininputs">
-
-    @*<div class="text-danger" id="errorInfo"></div>
-    <div class="text-info" id="responseInfo"></div>*@
     <fieldset>
         <div class="input-div">
             <div>
@@ -49,10 +51,10 @@
             <input class="input xpath" type="text" id="xpathInput">
         </div>
         <div class="input-div">
+            <h5 class="left-align" for="xml">XML</h5>
             <div>
-                <h5 class="left-align" for="xml">XML</h5>
+                <textarea class="input xml" type="text" id="xmlInput"></textarea>
             </div>
-            <textarea class="input xml" type="text" id="xmlInput"></textarea>
         </div>
         <div class="left-align button-div">
             <button type="button" class="btn btn-light" id="validateButton">Validate</button>
@@ -69,8 +71,20 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<link rel="stylesheet" href="~/lib/codemirror/codemirror.css">
+<script src="~/lib/codemirror/codemirror.js"></script>
+<script src="~/lib/codemirror/mode/xml/xml.js"></script>
+
+
 <script type="text/javascript">
     $(document).ready(function () {
+
+
+        var editor = CodeMirror.fromTextArea(document.getElementById("xmlInput"), {
+            mode: "xml",
+            lineNumbers: true,
+        });
 
         function escapeHtml(html) {
             var text = document.createTextNode(html);
@@ -81,19 +95,16 @@
 
         $('#clearButton').click(function () {
             document.getElementById("xpathInput").value = "";
-            document.getElementById("xmlInput").value = "";
+            editor.setValue("");
         });
 
         $('#validateButton').click(function () {
-            //document.getElementById("errorInfo").textContent = "";
-            //document.getElementById("responseInfo").textContent = "";
-
             var url = "/api/Validation/Validate";
             $.ajax({
                 type: "POST",
                 url: url,
                 contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({ "xpathExpression": document.getElementById("xpathInput").value, "xml": document.getElementById("xmlInput").value }),
+                data: JSON.stringify({ "xpathExpression": document.getElementById("xpathInput").value, "xml": editor.getValue() }),
                 success: function (data) {
 
                     var response = escapeHtml(data);

@@ -14,4 +14,8 @@
     <PackageReference Include="XPath2" Version="1.0.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\codemirror\" />
+  </ItemGroup>
+
 </Project>
