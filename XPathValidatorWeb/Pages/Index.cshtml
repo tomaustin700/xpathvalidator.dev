@@ -3,47 +3,56 @@
 @{
 }
 
-<style>
-    div.maininputs {
-        width: 1000px;
-        margin: auto;
-        /*border: 3px solid #73AD21;*/
-    }
+    <style>
+        div.maininputs {
+            width: 1000px;
+            margin: auto;
+            /*border: 3px solid #73AD21;*/
+        }
 
-    .input {
-        width: 1000px
-    }
+        .input {
+            width: 1000px
+        }
 
-    .xml {
-        height: 1000px
-    }
+        .xml {
+            height: 1000px
+        }
 
-    .left-align {
-        text-align: left;
-    }
+        .left-align {
+            text-align: left;
+        }
 
-    .input-div {
-        padding-bottom: 7px;
-    }
+        .input-div {
+            padding-bottom: 7px;
+        }
 
-    .button-div {
-        padding-bottom: 18px;
-    }
+        .header {
+            padding-bottom: 7px;
+            padding-top: 10px;
+        }
 
-    .validation-summary-errors ul {
-        list-style: none;
-        padding-left: 0px;
-    }
+        .button-div {
+            padding-bottom: 18px;
+        }
 
-    .CodeMirror {
-        text-align: left !important;
-        border: 1px solid #bbbbbb;
-        height: 500px !important;
-    }
-</style>
+        .validation-summary-errors ul {
+            list-style: none;
+            padding-left: 0px;
+        }
+
+        .CodeMirror {
+            text-align: left !important;
+            border: 1px solid #bbbbbb;
+            height: 500px !important;
+        }
+    </style>
 
 <div class="text-center maininputs">
     <fieldset>
+        <div class="header">
+            <h1 class="left-align">XPath Validator</h1>
+
+        </div>
         <div class="input-div">
             <div>
                 <h5 class="left-align" for="xpathExpression">XPath Expression</h5>
