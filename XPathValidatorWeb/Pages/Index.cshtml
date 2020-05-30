@@ -3,49 +3,54 @@
 @{
 }
 
-    <style>
-        div.maininputs {
-            width: 1000px;
-            margin: auto;
-            /*border: 3px solid #73AD21;*/
-        }
+<style>
+    div.maininputs {
+        width: 1000px;
+        margin: auto;
+        /*border: 3px solid #73AD21;*/
+    }
 
-        .input {
-            width: 1000px
-        }
+    .input {
+        width: 1000px
+    }
 
-        .xml {
-            height: 1000px
-        }
+    .xml {
+        height: 1000px
+    }
 
-        .left-align {
-            text-align: left;
-        }
+    .left-align {
+        text-align: left;
+    }
 
-        .input-div {
-            padding-bottom: 7px;
-        }
+    .right-align {
+        text-align: right;
+    }
 
-        .header {
-            padding-bottom: 7px;
-            padding-top: 10px;
-        }
+    .input-div {
+        padding-bottom: 7px;
+    }
 
-        .button-div {
-            padding-bottom: 18px;
-        }
+    .header {
+        padding-bottom: 7px;
+        padding-top: 10px;
+    }
 
-        .validation-summary-errors ul {
-            list-style: none;
-            padding-left: 0px;
-        }
+    .button-div {
+        display: inline;
+        padding-bottom: 18px;
+    }
 
-        .CodeMirror {
-            text-align: left !important;
-            border: 1px solid #bbbbbb;
-            height: 500px !important;
-        }
-    </style>
+    .validation-summary-errors ul {
+        list-style: none;
+        padding-left: 0px;
+    }
+
+    .CodeMirror {
+        text-align: left !important;
+        border: 1px solid #bbbbbb;
+        height: 500px !important;
+    }
+</style>
 
 <div class="text-center maininputs">
     <fieldset>
@@ -65,9 +70,12 @@
                 <textarea class="input xml" type="text" id="xmlInput"></textarea>
             </div>
         </div>
-        <div class="left-align button-div">
+        <div class="button-div" style="float: left;">
             <button type="button" class="btn btn-light" id="validateButton">Validate</button>
             <button type="button" class="btn btn-light" id="clearButton">Clear</button>
+        </div>
+        <div class="button-div" style="float: right;">
+            <button type="button" class="btn btn-light" id="shareButton">Share</button>
         </div>
     </fieldset>
 
@@ -84,6 +92,7 @@
 <link rel="stylesheet" href="~/lib/codemirror/codemirror.css">
 <script src="~/lib/codemirror/codemirror.js"></script>
 <script src="~/lib/codemirror/mode/xml/xml.js"></script>
+<script src="~/lib/lz-string/lz-string.js"></script>
 
 
 <script type="text/javascript">
@@ -95,12 +104,52 @@
             lineNumbers: true,
         });
 
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        if (urlParams.has('xpath')) {
+            document.getElementById("xpathInput").value = LZString.decompressFromEncodedURIComponent(urlParams.get('xpath'))
+        }
+
+        if (urlParams.has('xml')) {
+            editor.setValue(LZString.decompressFromEncodedURIComponent(urlParams.get('xml')));
+        }
+
+
         function escapeHtml(html) {
             var text = document.createTextNode(html);
             var p = document.createElement('p');
             p.appendChild(text);
             return p.innerHTML;
         }
+
+
+        $('#shareButton').click(function () {
+            var xpath = document.getElementById("xpathInput").value;
+            var xml = editor.getValue();
+
+            var xpathEncode = LZString.compressToEncodedURIComponent(xpath);
+            var xmlEncode = LZString.compressToEncodedURIComponent(xml);
+
+            Swal.fire({
+                title: 'Link Generated',
+                icon: 'success',
+                confirmButtonText: 'Copy'
+            }).then((result) => {
+                if (result.value) {
+                    var url = new URL("https://xpathvalidator.dev");
+                    if (xpath) {
+                        url.searchParams.append('xpath', xpathEncode);
+                    }
+
+                    if (xml) {
+                        url.searchParams.append('xml', xmlEncode);
+                    }
+                    navigator.clipboard.writeText(url);
+                }
+            })
+        });
+
 
         $('#clearButton').click(function () {
             document.getElementById("xpathInput").value = "";

@@ -26,21 +26,5 @@ namespace XPathValidatorWeb.Pages
         public ValidationItem Main { get; set; }
 
 
-        public void OnGet()
-        {
-        }
-
-
-        public void OnPost()
-        {
-            if (ModelState.IsValid)
-            {
-
-            }
-
-            //OnGet();
-
-            //return OnGet();
-        }
     }
 }
