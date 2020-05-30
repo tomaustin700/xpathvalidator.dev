@@ -137,7 +137,7 @@
                 confirmButtonText: 'Copy'
             }).then((result) => {
                 if (result.value) {
-                    var url = new URL("https://xpathvalidator.dev");
+                    var url = new URL(location.origin);
                     if (xpath) {
                         url.searchParams.append('xpath', xpathEncode);
                     }
